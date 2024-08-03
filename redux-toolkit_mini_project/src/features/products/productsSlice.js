@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchProducts } from './productsAPI';
 
 const initialState = {
-  products: [],
+  products: [] ,
   status: 'idle',
 };
 
@@ -11,7 +11,6 @@ export const fetchAsync = createAsyncThunk(
   'products/fetchProduct',
   async () => {
     const response = await fetchProducts();
-    // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
@@ -20,9 +19,8 @@ export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    
+  
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchAsync.pending, (state) => {
@@ -30,11 +28,11 @@ export const productsSlice = createSlice({
       })
       .addCase(fetchAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.value += action.payload;
+        state.products  = action.payload;
       });
   },
 });
 
-// export const {  } = productsSlice.actions;
+// export const { } = productsSlice.actions;
 
 export default productsSlice.reducer;
